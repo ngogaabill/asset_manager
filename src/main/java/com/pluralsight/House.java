@@ -46,6 +46,7 @@ public class House extends Asset {
         this.condition = condition;
     }
 
+    @Override
     public double getValue() {
         double total = 0.0;
         switch (getCondition()) {

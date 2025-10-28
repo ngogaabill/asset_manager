@@ -1,9 +1,12 @@
 package com.pluralsight;
 
+import java.time.LocalDate;
+
 public class Vehicle extends Asset {
     private String makeModel;
     private int year;
     private int odometer;
+
 
     public Vehicle(String description, String dateAcquired, double originalCost, String makeModel, int year, int odometer) {
         super(description, dateAcquired, originalCost);
@@ -39,14 +42,19 @@ public class Vehicle extends Asset {
     @Override
     public double getValue() {
         double total = 0.0;
+        LocalDate date = LocalDate.now();
+        int yearToday = date.getYear();
+        String[] acquiredDataParts = getDateAcquired().split("\\/");
+        int yearFromAcquired = Integer.parseInt(acquiredDataParts[2]);
+        int age = yearToday - yearFromAcquired;
 
-        if (0 < getYear() && getYear() < 3) {
-            total = getOriginalCost() - (getOriginalCost() * 0.03);
-        } else if (4 < getYear() && getYear() < 6) {
-            total = getOriginalCost() - (getOriginalCost() * 0.06);
-        } else if (7 < getYear() && getYear() < 10) {
-            total = getOriginalCost() - (getOriginalCost() * 0.08);
-        } else if (getYear() > 10) {
+        if (0 < age && age <= 3) {
+            total = getOriginalCost() - (getOriginalCost() * (0.03 * age));
+        } else if (4 <= age && age<= 6) {
+            total = getOriginalCost() - (getOriginalCost() * (0.06 * age));
+        } else if (7 <= age && age <= 10) {
+            total = getOriginalCost() - (getOriginalCost() * (0.08 * age));
+        } else if (age > 10) {
             total = getOriginalCost() - 1000;
         }
 
